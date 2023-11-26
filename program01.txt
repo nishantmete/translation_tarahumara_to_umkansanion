@@ -1,0 +1,80 @@
+﻿To solve the problem, I use a set of functions before the main function Umkansanize and call them according to the need
+
+Here are the functions and what and how they achieve their purpose 
+
+First function - open_get_info_index
+- I use this function to open the index.txt file stored in the source root which contains the song names and thier path 
+- After opening the index file, I also make a dictionary conataining the song names as the keys and their paths as the values of that dictionary which is named paths_with_song_names
+- As the each line in the index file has the song names in quotes and the values after a space
+- I run a for loop for each line and seperate that line by " 
+- Which gives me the song name at the second place and the path at the fourth position, which I add it to the dictionary I mentioned
+- Now I return the dictionary (paths_with_song_names), so that I can use it in the main function or into the other functions 
+
+
+I have called the above function in the main Umkansanize function and have stored the return value of that function which is paths_with_song_names in the same named variable
+
+Now, I have song names and paths
+
+I run a for loop in the main Umkansanize function to open each Tarahumara song file, I run this for loop on the values of the paths_with_song_names dictionary 
+
+Now during this loop, for each iteration, as I open new Tarahumara song file, I store the Tarahumara script of that as it is but reversed line by line, in the Tarahumara song string. 
+Which during each new file gets reset
+
+Now as I have the Tarahumara script of that file correctly in the string, I run a for loop on that Tarahumara_song string 
+
+I have made a function to change the Tarahumara script to Umkansanizanion script by each character 
+
+About the convert_to_umkanzanion_script:
+- the fun get a single character as an input
+- I have if, elif, else conditionals for that single character
+- for ex if 1 return A, if + return #
+
+As I am iterating through the Tarahumara_song I store all the values from the convert_to_umkanzanion_script function to the Umkansanizanion_song_draft
+
+The string Umkansanizanion_song_draft, as the names suggests is not the correct translation yet 
+There are no durations in that string
+
+So, during the same loop, I call another function convert_to_umkanzanion_song, which just counts the letters and adds the number of repetitions of it after that letter
+
+After this, I call convert_to_umkanzanion_song function, which at first converts each letter into a single element of a list Umkansanizanion_song_draft_list, also during this, I count the notes which are sharp or flat as single elements of that list
+I do that by using list comprehension, I use zip function to run from Umkansanizanion_song_draft i.e from first letter and Umkansanizanion_song_draft[1] i.e. from second letter at the same time, so that I can compare if the next letter is one from b or #
+
+Now after putting every single letter into a list, it's now time to count them
+
+I use a for loop to count the consecutive repetitions of the letters, I put Umkansanizanion_song_draft_list[0] as previous character at the first iteration and then start the for loop from Umkansanizanion_song_draft_list[1]
+The previous character is changed after every iteration, I count the repetitions by a variable named repetitions, and if the character is not equal to the previous character, 
+I just add the character and the string of the repetitions to the string Umkansanizanion_song. 
+
+The Umkansanizanion_song is returned to the main function, where, a for loop is running for each Tarahumara song file, and until now we have sucefully translated them to the Umkansanizanion
+
+I also make another dictionary names_with_translation which contains the song names and their translation to the Umkansanizanion script, which I use later to write to the files. The keys of the dictionary are the song names and the values are the translations
+
+Now in the main function in the for loop, I also call another function get_the_sum, which counts the duration of the song
+
+It does that by reading the Umkansanizanion_song that has just been created in the line before one by one, and see if the character is the a number by using isnumeric()
+I give all the Umkansanizanion_song at a single time to get_the_sum function, and in that function, it runs a for loop for to see if each character is a number or not
+Now if some character is a number, I also check if the character after that is a number as the durations can be of more than one digits
+
+I do that by declaring a number string and the code adds the next characters to that string until the next charcter is a other than number 
+
+now I convert the number string to the integer by int() and append that to the numbers list
+
+At the end of the function get_the_sum, I return the sum(numbers_list), which is the duration of that song
+
+Now, back to the main Umkansanize function again, now as I have also gotten the duration of the song too, I make another dictionary names_with_durations to store the song names as keys and the durations of the songs as values 
+which I will use to write the out index file at the end
+
+Now, for every Tarahumara song I have its, path, its duration, its translation stored and linked to its names in paths_with_song_names, names_with_durations, names_with_translation dictionary
+
+As, we have to store the song names into the targetroot as an index.txt which we have to store in descending order of the durations, and if the durations are same we consider the alphabetical order
+I have names_with_durations, which contains song names (keys) and their durations (values), I just sort this dictionary
+I use an another function as a key to the sorted() function. which first checks the duration and then the alphabetical order, duration is -, so the smallest duration gets at the end
+
+
+I call another function in the main function Umkansanize named make_the_index_file, where I first open an index.txt file in the writing mode, and use names_with_durations dictionary which is already sorted
+to write onto the index.txt. I use print() to write 
+
+Now, I call another function make_and_write_the_songs, which makes song files named song_names.txt and writes the song translation by using dictionary names_with_translation
+
+
+At the end I return, names_with_durations (at the end of the main Umkansanize function) 
